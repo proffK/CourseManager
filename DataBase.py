@@ -1,5 +1,6 @@
 
-'''   Copyright 2015 RTeam (Edgar Kaziahmedov, Klim Kireev, Artem Yashuhin)
+'''   
+   Copyright 2015 OneRTeam (Edgar Kaziahmedov, Klim Kireev, Artem Yashuhin)
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
