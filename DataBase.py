@@ -301,6 +301,16 @@ class TDataBase(object):
                 BufferList.append(current.Id)
         return BufferList
 #*************************************************************************#
+    def get_inp_skills_with_id(self, Id):
+        for current in self.CourseList:
+            if current.Id == Id:
+                return current.Skill_I
+#*************************************************************************#
+    def get_out_skills_with_id(self, Id):
+        for current in self.CourseList:
+            if current.Id == Id:
+                return current.Skill_I
+#*************************************************************************#
     def exist_course(self, Id):
         for current in self.CourseList:
             if current.Id == Id:
