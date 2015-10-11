@@ -89,7 +89,7 @@ class TDataBase(object):
         curline = self.FilePointer.readline()
         while curline != "":
             curline=curline.rstrip('\n')
-            print curline
+            #print curline
             if curline == "course_start":
                 BufferCourse = TCourse("", 0, 0, 0, "", [], [])
                 courseline = self.FilePointer.readline()
@@ -99,27 +99,27 @@ class TDataBase(object):
                         continue
                     if courseline.lower() == "name:":
                         BufferCourse.Name = self.read_block("name")
-                        print BufferCourse.Name
+                        #print BufferCourse.Name
                     elif courseline.lower() == "id:":
                         BufferCourse.Id = self.read_block("id")
                         if BufferCourse.Id > self.CourseCID:
                             self.CourseCID = BufferCourse.Id
-                        print BufferCourse.Id
+                        #print BufferCourse.Id
                     elif courseline.lower() == "hours:":
                         BufferCourse.Hours = self.read_block("hours")
-                        print BufferCourse.Hours
+                        #print BufferCourse.Hours
                     elif courseline.lower() == "weeks:":
                         BufferCourse.Weeks = self.read_block("weeks")
-                        print BufferCourse.Weeks
+                        #print BufferCourse.Weeks
                     elif courseline.lower() == "description:":
                         BufferCourse.Description = self.read_block("description")
-                        print BufferCourse.Description
+                        #print BufferCourse.Description
                     elif courseline.lower() == "skill_i:":
                         BufferCourse.Skill_I = self.read_block("skill_i")
-                        print BufferCourse.Skill_I
+                        #print BufferCourse.Skill_I
                     elif courseline.lower() == "skill_o:":
                         BufferCourse.Skill_O = self.read_block("skill_o")
-                        print BufferCourse.Skill_O
+                        #print BufferCourse.Skill_O
                     elif courseline.lower() == "course_end":
                         if BufferCourse.check() == -1:
                             print "Database corrupted, check data.\n"
@@ -135,7 +135,7 @@ class TDataBase(object):
                     return -1
 
             elif curline == "skill_start":
-                print "hirngenre"
+                #print "hirngenre"
                 BufferSkill = TSkill("", 0, "")
                 skillline = self.FilePointer.readline()
                 while len(skillline) != 0:
@@ -144,15 +144,15 @@ class TDataBase(object):
                         continue
                     if skillline.lower() == "name:":
                         BufferSkill.Name = self.read_block("name")
-                        print BufferSkill.Name
+                        #print BufferSkill.Name
                     elif skillline.lower() == "id:":
                         BufferSkill.Id = self.read_block("id")
                         if BufferSkill.Id > self.SkillCID:
                             self.SkillCID = BufferSkill.Id
-                        print BufferSkill.Id
+                        #print BufferSkill.Id
                     elif skillline.lower() == "description:":
                         BufferSkill.Description = self.read_block("description")
-                        print BufferSkill.Description
+                        #print BufferSkill.Description
                     elif skillline.lower() == "skill_end":
                         if BufferSkill.check() == -1:
                             print "Database corrupted, check data.\n"
@@ -204,7 +204,10 @@ class TDataBase(object):
             if option == "id" or option == "hours" or option == "weeks":
                 return int(Buffer.replace(' ',''))
             if option == "skill_i" or option == "skill_o":
-                return Buffer.split(",")
+                BufferSkill = []
+                for cur in Buffer.split(","):
+                    BufferSkill.append(int(cur))
+                return BufferSkill
         #-----------------------------------------------------------------
         '''if option == "id":
             for current in self.FilePointer:
@@ -236,7 +239,7 @@ class TDataBase(object):
                     Buffer += current
                 else:
                     break
-            return Buffer'''
+            return Buffer
         #-----------------------------------------------------------------
         if option == "skill_i":
             for current in self.FilePointer:
@@ -252,10 +255,9 @@ class TDataBase(object):
                     Buffer += current
                 else:
                     break
-            return Buffer.split(",")
+            return Buffer.split(",")'''
         #-----------------------------------------------------------------
-        else:
-            return -1
+        return -1
 #*************************************************************************#
     def dump(self):
         pass
@@ -273,9 +275,11 @@ class TDataBase(object):
 #*************************************************************************#
     def find_courses_with_inp_skill(self, Id ):
         BufferList = []
+        #print self.CourseList
         for current in self.CourseList:
+            #print current.Skill_I
             if current.Skill_I.count(Id) > 0:
-                BufferList.append(current)
+                BufferList.append(current.Id)
         return BufferList
 #*************************************************************************#
     def get_courses_id_list(self):
@@ -294,7 +298,7 @@ class TDataBase(object):
         BufferList = []
         for current in self.CourseList:
             if current.Skill_O.count(Id) > 0:
-                BufferList.append(current)
+                BufferList.append(current.Id)
         return BufferList
 #*************************************************************************#
     def exist_course(self, Id):
