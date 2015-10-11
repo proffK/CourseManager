@@ -260,7 +260,36 @@ class TDataBase(object):
         return -1
 #*************************************************************************#
     def dump(self):
-        pass
+        self.FilePointer.seek(0,0)
+        for curcourse in self.CourseList:
+            self.FilePointer.write ("course_start\n")
+            self.FilePointer.write ("name:\n")
+            self.FilePointer.write ("    "+curcourse.Name+'\n')
+            self.FilePointer.write ("id:\n")
+            self.FilePointer.write ("    "+str(curcourse.Id)+'\n')
+            self.FilePointer.write ("hours:\n")
+            self.FilePointer.write ("    "+str(curcourse.Hours)+'\n')
+            self.FilePointer.write ("weeks:"+'\n')
+            self.FilePointer.write ("    "+str(curcourse.Weeks)+'\n')
+            self.FilePointer.write ("description:"+'\n')
+            self.FilePointer.write ("    "+curcourse.Description+'\n')
+            self.FilePointer.write ("skill_i:"+'\n')
+            self.FilePointer.write ("    "+str(curcourse.Skill_I).replace(", ",",").\
+                                    replace("[", "").replace("]","")+'\n')
+            self.FilePointer.write ("skill_o:"+'\n')
+            self.FilePointer.write ("    "+str(curcourse.Skill_O).replace(", ",",").\
+                                    replace("[", "").replace("]","")+'\n')
+            self.FilePointer.write ("course_end\n\n")
+        for curcourse in self.SkillList:
+            self.FilePointer.write ("skill_start"+'\n')
+            self.FilePointer.write ("name:"+'\n')
+            self.FilePointer.write ("    "+curcourse.Name+'\n')
+            self.FilePointer.write ("id:"+'\n')
+            self.FilePointer.write ("    "+str(curcourse.Id)+'\n')
+            self.FilePointer.write ("description:"+'\n')
+            self.FilePointer.write ("    "+curcourse.Description+'\n')
+            self.FilePointer.write ("skill_end\n\n")
+        return 0
 #*************************************************************************#
     def dump_console(self):
         print "\n******************Courses**********************\n"
