@@ -20,7 +20,7 @@ import sys
 from PyQt4 import QtGui, QtCore
 import DataBase
 
-DATA_BASE_NAME = "1.txt" 
+DATA_BASE_NAME = open("DataBase.txt", "r+") 
 
 class MainPage(QtGui.QWidget):
 	def __init__(self, parent = None):
@@ -42,7 +42,7 @@ class MainPage(QtGui.QWidget):
 		vButtonBox.addWidget(self.addCourseButton)
 		vButtonBox.addWidget(self.addSkillButton)
 		
-		self.mainWindow		 = ViewCourses()
+		self.mainWindow		 = EditCourse()
 		self.grid.addLayout(vButtonBox, 0, 0)
 		self.grid.addWidget(self.mainWindow, 0, 1)
 
@@ -55,7 +55,7 @@ class MainPage(QtGui.QWidget):
 
 	def view_add_course(self):
 		self.mainWindow.close()
-		self.mainWindow = EditCourse()
+		self.mainWindow = EditCourse(-1)
 		self.grid.addWidget(self.mainWindow, 0, 1)
 
 	def view_add_skill(self):
@@ -71,19 +71,13 @@ class EditCourse(QtGui.QWidget):
 		#Opening Data Base
 		self.dataBase = DataBase.TDataBase(DATA_BASE_NAME)
 		self.dataBase.pull()
-		#Testing
-		self.dataBase.CourseCID = 0
-		self.dataBase.SkillCID = 0
-		self.dataBase.add_skill("1", "2")
-		self.dataBase.add_skill("2", "323456aaa")
 		
-		if CourseCId == -1:
-			self.courseForEdit = self.dataBase.get_course(self.dataBase.add_course("Course", "0", "0", "0", [], []))
-		else:
-			self.courseForEdit = self.dataBase.get_course(CourseCId)
-
-		#Testing
-		self.courseForEdit.Skill_I.append(DataBase.TSkill("1", 5, "2"))
+		print self.dataBase.CourseCID
+		#if CourseCId == -1:
+			#self.courseForEdit = self.dataBase.get_course(self.dataBase.add_course("Course", "0", "0", "0", [], []))
+		#else:
+		#	self.courseForEdit = self.dataBase.get_course(CourseCId)
+		self.courseForEdit = self.dataBase.get_course(self.dataBase.add_course("Course", "0", "0", "0", [], []))
 
 		self.grid = QtGui.QGridLayout()
 
@@ -200,8 +194,6 @@ class EditSkill(QtGui.QWidget):
 
 		self.dataBase = DataBase.TDataBase(DATA_BASE_NAME)
 		self.dataBase.pull()
-		#Testing
-		self.dataBase.SkillCID = 0
 
 		grid = QtGui.QGridLayout()
 
@@ -228,6 +220,9 @@ class ViewCourses(QtGui.QWidget):
 	def __init__(self, parent = None):
 		QtGui.QWidget.__init__(self, parent)
 
+		self.dataBase = DataBase.TDataBase(DATA_BASE_NAME)
+		self.dataBase.pull()
+
 		grid = QtGui.QGridLayout()
 
 		self.coursesList = QtGui.QListWidget()
@@ -243,9 +238,8 @@ class ViewCourses(QtGui.QWidget):
 		self.setLayout(grid)
 
 	def view_courses(self):
-		dataBase = DataBase.TDataBase(DATA_BASE_NAME)
-		dataBase.pull()
-		for course in dataBase.CourseList:
+		
+		for course in self.dataBase.CourseList:
 			self.coursesList.addItem(course.Name)
 
 app = QtGui.QApplication(sys.argv)
