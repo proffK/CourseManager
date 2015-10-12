@@ -21,6 +21,8 @@ from PyQt4 import QtGui, QtCore
 import DataBase
 
 DATA_BASE_NAME = open("DataBase.txt", "r+") 
+GLOBAL_DATA_BASE = DataBase.TDataBase(DATA_BASE_NAME)
+GLOBAL_DATA_BASE.pull()
 
 class MainPage(QtGui.QWidget):
 	def __init__(self, parent = None):
@@ -42,7 +44,7 @@ class MainPage(QtGui.QWidget):
 		vButtonBox.addWidget(self.addCourseButton)
 		vButtonBox.addWidget(self.addSkillButton)
 		
-		self.mainWindow		 = EditCourse()
+		self.mainWindow		 = ViewCourses()
 		self.grid.addLayout(vButtonBox, 0, 0)
 		self.grid.addWidget(self.mainWindow, 0, 1)
 
@@ -55,7 +57,7 @@ class MainPage(QtGui.QWidget):
 
 	def view_add_course(self):
 		self.mainWindow.close()
-		self.mainWindow = EditCourse(-1)
+		self.mainWindow = EditCourse()
 		self.grid.addWidget(self.mainWindow, 0, 1)
 
 	def view_add_skill(self):
@@ -69,15 +71,14 @@ class EditCourse(QtGui.QWidget):
 		QtGui.QWidget.__init__(self, parent)
 
 		#Opening Data Base
-		self.dataBase = DataBase.TDataBase(DATA_BASE_NAME)
-		self.dataBase.pull()
 		
-		print self.dataBase.CourseCID
-		#if CourseCId == -1:
-			#self.courseForEdit = self.dataBase.get_course(self.dataBase.add_course("Course", "0", "0", "0", [], []))
-		#else:
-		#	self.courseForEdit = self.dataBase.get_course(CourseCId)
-		self.courseForEdit = self.dataBase.get_course(self.dataBase.add_course("Course", "0", "0", "0", [], []))
+		
+		print GLOBAL_DATA_BASE.CourseCID
+		if CourseCId == -1:
+			self.courseForEdit = GLOBAL_DATA_BASE.get_course(GLOBAL_DATA_BASE.add_course("Course", "0", "0", "0", [], []))
+		else:
+			self.courseForEdit = GLOBAL_DATA_BASE.get_course(CourseCId)
+		#self.courseForEdit = GLOBAL_DATA_BASE.get_course(GLOBAL_DATA_BASE.add_course("Course", "0", "0", "0", [], []))
 
 		self.grid = QtGui.QGridLayout()
 
@@ -86,7 +87,8 @@ class EditCourse(QtGui.QWidget):
 		self.grid.addWidget(QtGui.QLabel(u"Выходные навыки"), 0, 2)
 
 		self.inputSkills = QtGui.QListWidget()
-		for skill in self.courseForEdit.Skill_I:
+		for skillId in self.courseForEdit.Skill_I:
+			skill = GLOBAL_DATA_BASE.get_skill(skillId)
 			listItem = QtGui.QListWidgetItem();
 			listItem.setData(32, skill.Id)
 			listItem.setText(skill.Name)
@@ -94,11 +96,12 @@ class EditCourse(QtGui.QWidget):
 		self.grid.addWidget(self.inputSkills, 1, 0)
 
 		self.outputSkills = QtGui.QListWidget()
-		for skill in self.courseForEdit.Skill_O:
+		for skillId in self.courseForEdit.Skill_O:
+			skill = GLOBAL_DATA_BASE.get_skill(skillId)
 			listItem = QtGui.QListWidgetItem();
 			listItem.setData(32, skill.Id)
 			listItem.setText(skill.Name)
-			self.inputSkills.addItem(QtGui.QListWidgetItem(listItem))
+			self.outputSkills.addItem(QtGui.QListWidgetItem(listItem))
 		self.grid.addWidget(self.outputSkills, 1, 2)
 
 		self.editInputSkills 	= QtGui.QPushButton(u"Редактировать навык")
@@ -137,63 +140,60 @@ class EditCourse(QtGui.QWidget):
 	def change_course_name(self):
 		self.currentCourseTitle.setText(self.editCourseTitle.displayText())
 		self.courseForEdit.Name = self.editCourseTitle.displayText()
-		self.dataBase.dump()
+		GLOBAL_DATA_BASE.dump()
 
 	def delete_input_skill(self):
 		listItems = self.inputSkills.selectedItems()
 		for item in listItems:
 			for skill in self.courseForEdit.Skill_I:
-				if(skill.Id == item.data(32)):
+				if(skill == item.data(32)):
 					self.courseForEdit.Skill_I.remove(skill)
 			self.inputSkills.takeItem(self.inputSkills.row(item))
-		self.dataBase.dump()
+		GLOBAL_DATA_BASE.dump()
 
 
 	def delete_output_skill(self):
 		listItems = self.outputSkills.selectedItems()
 		for item in listItems:
 			for skill in self.courseForEdit.Skill_O:
-				if(skill.Id == item.data(32)):
+				if(skill == item.data(32)):
 					self.courseForEdit.Skill_O.remove(skill)
 			self.outputSkills.takeItem(self.outputSkills.row(item))
-		self.dataBase.dump()
+		GLOBAL_DATA_BASE.dump()
 
 	def add_input_skill(self):
 		name_skills = []
-		for skill in self.dataBase.SkillList:
+		for skill in GLOBAL_DATA_BASE.SkillList:
 			name_skills.append(skill.Name)
 
 		item, ok = QtGui.QInputDialog.getItem(self, u"Выбрать навык", "w", name_skills, 0, False)
 		if ok and item:
-			self.courseForEdit.Skill_I.append(self.dataBase.SkillList[name_skills.index(item)])
-		self.dataBase.dump()
+			self.courseForEdit.Skill_I.append(GLOBAL_DATA_BASE.SkillList[name_skills.index(item)].Id)
+		GLOBAL_DATA_BASE.dump()
 		listItem = QtGui.QListWidgetItem();
-		listItem.setData(32, self.dataBase.SkillList[name_skills.index(item)].Id)
-		listItem.setText(self.dataBase.SkillList[name_skills.index(item)].Name)
+		listItem.setData(32, GLOBAL_DATA_BASE.SkillList[name_skills.index(item)].Id)
+		listItem.setText(GLOBAL_DATA_BASE.SkillList[name_skills.index(item)].Name)
 		self.inputSkills.addItem(QtGui.QListWidgetItem(listItem))
-		self.dataBase.dump_console()
 
 	def add_output_skill(self):
 		name_skills = []
-		for skill in self.dataBase.SkillList:
+		for skill in GLOBAL_DATA_BASE.SkillList:
 			name_skills.append(skill.Name)
 
 		item, ok = QtGui.QInputDialog.getItem(self, u"Выбрать навык", "w", name_skills, 0, False)
 		if ok and item:
-			self.courseForEdit.Skill_O.append(self.dataBase.SkillList[name_skills.index(item)])
-		self.dataBase.dump()
+			self.courseForEdit.Skill_O.append(GLOBAL_DATA_BASE.SkillList[name_skills.index(item)].Id)
+		GLOBAL_DATA_BASE.dump()
 		listItem = QtGui.QListWidgetItem();
-		listItem.setData(32, self.dataBase.SkillList[name_skills.index(item)].Id)
-		listItem.setText(self.dataBase.SkillList[name_skills.index(item)].Name)
+		listItem.setData(32, GLOBAL_DATA_BASE.SkillList[name_skills.index(item)].Id)
+		listItem.setText(GLOBAL_DATA_BASE.SkillList[name_skills.index(item)].Name)
 		self.outputSkills.addItem(QtGui.QListWidgetItem(listItem))
-		self.dataBase.dump_console()
 
 class EditSkill(QtGui.QWidget):
 	def __init__(self, parent = None):
 		QtGui.QWidget.__init__(self, parent)
 
-		self.dataBase = DataBase.TDataBase(DATA_BASE_NAME)
-		self.dataBase.pull()
+		
 
 		grid = QtGui.QGridLayout()
 
@@ -212,35 +212,42 @@ class EditSkill(QtGui.QWidget):
 		self.setLayout(grid)
 
 	def add_skill_in_base(self):
-		self.dataBase.add_skill(self.skillDefinition.displayText(), self.skillDeclaration.toPlainText())
-		self.dataBase.dump()
-		self.dataBase.dump_console()
+		GLOBAL_DATA_BASE.add_skill(self.skillDefinition.displayText(), self.skillDeclaration.toPlainText())
+		GLOBAL_DATA_BASE.dump()
 
 class ViewCourses(QtGui.QWidget):
 	def __init__(self, parent = None):
 		QtGui.QWidget.__init__(self, parent)
 
-		self.dataBase = DataBase.TDataBase(DATA_BASE_NAME)
-		self.dataBase.pull()
-
-		grid = QtGui.QGridLayout()
+		self.grid = QtGui.QGridLayout()
 
 		self.coursesList = QtGui.QListWidget()
 		self.editCourse  = QtGui.QPushButton(u"Изменить курс")
+		self.connect(self.editCourse, QtCore.SIGNAL('clicked()'), self.change_course)
+
 		self.addCourse	 = QtGui.QPushButton(u"Добавить курс")
 
 		self.view_courses()
 
-		grid.addWidget(self.coursesList, 0, 0)
-		grid.addWidget(self.editCourse, 1, 0)
-		grid.addWidget(self.addCourse, 2, 0)
+		self.grid.addWidget(self.coursesList, 0, 0)
+		self.grid.addWidget(self.editCourse, 1, 0)
+		self.grid.addWidget(self.addCourse, 2, 0)
 
-		self.setLayout(grid)
+		self.setLayout(self.grid)
 
 	def view_courses(self):
-		
-		for course in self.dataBase.CourseList:
-			self.coursesList.addItem(course.Name)
+		for course in GLOBAL_DATA_BASE.CourseList:
+			listItem = QtGui.QListWidgetItem();
+			listItem.setData(32, course.Id)
+			listItem.setText(course.Name)
+			self.coursesList.addItem(QtGui.QListWidgetItem(listItem))
+
+	def change_course(self):
+		courseId = int(self.coursesList.selectedItems()[0].data(32).toString())
+		print courseId
+		self.grid.addWidget(EditCourse(courseId), 0, 1)
+		GLOBAL_DATA_BASE.dump()
+
 
 app = QtGui.QApplication(sys.argv)
 qb = MainPage()
