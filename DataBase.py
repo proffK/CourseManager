@@ -366,7 +366,7 @@ class TDataBase(object):
         if ( self.SkillCID < 0 ):
             return -1
         BufferSkill = TSkill( Name, self.SkillCID, Description ); 
-        self.SkillList.appen ( BufferSkill )
+        self.SkillList.append( BufferSkill )
         self.SkillCID +=1
         return self.SkillCID-1
 #*************************************************************************#

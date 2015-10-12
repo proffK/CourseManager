@@ -1,6 +1,6 @@
 course_start
 name:
-    Square equation
+    Square equation2
 id:
     1
 hours:
@@ -230,5 +230,14 @@ id:
     9
 description:
     Familiar with recursion
+skill_end
+
+skill_start
+name:
+    ARM knowledge
+id:
+    10
+description:
+    Basic knowledge about ARM
 skill_end
 
