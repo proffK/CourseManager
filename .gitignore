@@ -60,3 +60,4 @@ target/
 *.swp
 *~
 main.py
+DataBase.txt
