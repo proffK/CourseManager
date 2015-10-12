@@ -48,7 +48,7 @@ class CoursesGraph(object):
         self.Graph.add_weighted_edges_from(FakeBeginEdges)
 
         self.FakeEndNodes = range(self.DB.CourseCID,\
-                             self.DB.CourseCID + len(OutSkills) + 1)
+                             self.DB.CourseCID + len(OutSkills))
         
         self.Graph.add_nodes_from(self.FakeEndNodes)
 
@@ -56,11 +56,13 @@ class CoursesGraph(object):
 
         for EndNode in self.FakeEndNodes:
             
-            FakeEndEdges = self.gen_inp_node_edges(EndNode, OutSkills)
+            FakeEndEdges = self.gen_inp_node_edges(EndNode, [OutSkills[self.DB.CourseCID - EndNode]])
             self.Graph.add_weighted_edges_from(FakeEndEdges)
 
             NewPath = shortest_path(self.Graph, self.FakeBeginNode, EndNode)
+            print NewPath
             PathesList.append(NewPath)
+            
 
         return self.merge_pathes(PathesList)
 
