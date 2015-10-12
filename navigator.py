@@ -79,7 +79,7 @@ class CoursesGraph(object):
 
             InpEdgesList = self.gen_inp_node_edges(Course,\
                                               self.DB.get_inp_skills_with_id(Course))
-            print InpEdgesList
+            #print InpEdgesList
             NewEdgesList.extend(InpEdgesList)
 
             OutEdgesList = self.gen_out_node_edges(Course,\
@@ -126,7 +126,7 @@ class CoursesGraph(object):
     def merge_pathes(self, PathesList):
 
         OutPath = []
-        print PathesList
+        #print PathesList
 
         for path in PathesList:
 
@@ -143,8 +143,10 @@ class CoursesGraph(object):
 
                     if i == 0:
                         OutPath.insert(0, path[i])
+                    elif i == len(OutPath) - 1:
+                        OutPath.append(path[i])
                     else: 
-                        OutPath.insert(OutPath.index(path[i-1]), path[i])
+                        OutPath.insert(OutPath.index(path[i-1]) + 1, path[i])
 
                 i += 1
 
