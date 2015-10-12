@@ -80,6 +80,8 @@ class TDataBase(object):
 #*************************************************************************#
     def __init__(self, FilePointer ):
         self.FilePointer = FilePointer
+        if FilePointer == -1:
+            return -1
         self.CourseList = []
         self.SkillList = []
         self.CourseCID = -1
@@ -260,6 +262,8 @@ class TDataBase(object):
         return -1
 #*************************************************************************#
     def dump(self):
+        self.FilePointer.seek(0,0)
+        self.FilePointer.truncate()
         self.FilePointer.seek(0,0)
         for curcourse in self.CourseList:
             self.FilePointer.write ("course_start\n")
