@@ -42,7 +42,8 @@ class CoursesGraph(object):
 ###############################################################################
     
     def get_optimal_path(self, InSkills, OutSkills):
-        
+
+        OldGraph = self.Graph
         self.Graph.add_node(self.FakeBeginNode)
         FakeBeginEdges = self.gen_out_node_edges(self.FakeBeginNode, InSkills)
         self.Graph.add_weighted_edges_from(FakeBeginEdges)
@@ -55,14 +56,35 @@ class CoursesGraph(object):
         PathesList = []
 
         for EndNode in self.FakeEndNodes:
+            for Skill in OutSkills:
+
+                FakeEndEdges = self.gen_inp_node_edges(EndNode, [Skill])
+                self.Graph.add_weighted_edges_from(FakeEndEdges)
+
+                NewPath = shortest_path(self.Graph, self.FakeBeginNode, EndNode)
+                PathesList.append(NewPath)
+
+        NewPath = self.merge_pathes(PathesList)
+
+        sim_flag = 0
+
+        for course in NewPath:
             
-            FakeEndEdges = self.gen_inp_node_edges(EndNode, OutSkills)
-            self.Graph.add_weighted_edges_from(FakeEndEdges)
+            if len(self.DB.get_inp_skills_with_id(course)) > 1:
 
-            NewPath = shortest_path(self.Graph, self.FakeBeginNode, EndNode)
-            PathesList.append(NewPath)
+                #print self.DB.get_inp_skills_with_id(course)
 
-        return self.merge_pathes(PathesList)
+                for skill in self.DB.get_inp_skills_with_id(course):
+                    if OutSkills.count(skill) == 0:
+                        OutSkills.append(skill)
+                        self.Graph = OldGraph
+                        sim_flag = 1
+
+        if sim_flag == 0:
+            return NewPath
+
+        print OutSkills , "!"
+        return self.get_optimal_path(InSkills, OutSkills)
 
 ###############################################################################
     
@@ -79,7 +101,7 @@ class CoursesGraph(object):
 
             InpEdgesList = self.gen_inp_node_edges(Course,\
                                               self.DB.get_inp_skills_with_id(Course))
-            print InpEdgesList
+            #print InpEdgesList
             NewEdgesList.extend(InpEdgesList)
 
             OutEdgesList = self.gen_out_node_edges(Course,\
@@ -126,25 +148,34 @@ class CoursesGraph(object):
     def merge_pathes(self, PathesList):
 
         OutPath = []
-        print PathesList
+        #print PathesList
 
         for path in PathesList:
 
             if path == []:
                 continue
 
-            path.pop(0)
-            path.pop(len(path) - 1)
+            for course in path:
+                if course in self.FakeEndNodes:
+                    path.pop(path.index(course))
+            
+            if 0 in path:
+                
+                path.pop(path.index(0))
+
             i = 0
 
             while i < len(path):
+                print OutPath
 
                 if path[i] not in OutPath:
 
                     if i == 0:
                         OutPath.insert(0, path[i])
+                    elif i == len(OutPath) - 1:
+                        OutPath.append(path[i])
                     else: 
-                        OutPath.insert(OutPath.index(path[i-1]), path[i])
+                        OutPath.insert(OutPath.index(path[i-1]) + 1, path[i])
 
                 i += 1
 
