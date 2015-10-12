@@ -1,0 +1,233 @@
+course_start
+name:
+    Square equation
+id:
+    1
+hours:
+    1
+weeks:
+    1
+description:
+    It was funny
+skill_i:
+    1
+skill_o:
+    1
+course_end
+
+course_start
+name:
+    Ten tasks
+id:
+    2
+hours:
+    3
+weeks:
+    1
+description:
+    It was boring
+skill_i:
+    1
+skill_o:
+    2
+course_end
+
+course_start
+name:
+    Stack processor
+id:
+    3
+hours:
+    5
+weeks:
+    2
+description:
+    It was interesting
+skill_i:
+    1
+skill_o:
+    2,5,7
+course_end
+
+course_start
+name:
+    Onegin sort
+id:
+    4
+hours:
+    3
+weeks:
+    1
+description:
+    It was exhousting
+skill_i:
+    2
+skill_o:
+    2
+course_end
+
+course_start
+name:
+    Hash table
+id:
+    5
+hours:
+    5
+weeks:
+    1
+description:
+    It was interesting
+skill_i:
+    2
+skill_o:
+    3,6
+course_end
+
+course_start
+name:
+    Akinator
+id:
+    6
+hours:
+    4
+weeks:
+    1
+description:
+    It was boring
+skill_i:
+    2
+skill_o:
+    2,4,9
+course_end
+
+course_start
+name:
+    Compiler
+id:
+    7
+hours:
+    10
+weeks:
+    3
+description:
+    It was exciting
+skill_i:
+    2,4,5
+skill_o:
+    3,9
+course_end
+
+course_start
+name:
+    Binary translation
+id:
+    8
+hours:
+    12
+weeks:
+    4
+description:
+    It was the best
+skill_i:
+    3,7
+skill_o:
+    8
+course_end
+
+course_start
+name:
+    Translator
+id:
+    9
+hours:
+    3
+weeks:
+    1
+description:
+    It was funny
+skill_i:
+    3,7
+skill_o:
+    5,9
+course_end
+
+skill_start
+name:
+    Basic C
+id:
+    1
+description:
+    Beginning knowledge in C
+skill_end
+
+skill_start
+name:
+    Medium C
+id:
+    2
+description:
+    Familiar with standart library
+skill_end
+
+skill_start
+name:
+    Advanced C
+id:
+    3
+description:
+    Familiar with pointers and functions pointers
+skill_end
+
+skill_start
+name:
+    Trees algorithms
+id:
+    4
+description:
+    Begining knowledge of trees
+skill_end
+
+skill_start
+name:
+    Stack algorithms
+id:
+    5
+description:
+    Beginning knowledge about stack
+skill_end
+
+skill_start
+name:
+    List algorithms
+id:
+    6
+description:
+    Beginning knowledge about lists
+skill_end
+
+skill_start
+name:
+    Basic computer architecture
+id:
+    7
+description:
+    Beginning knowledge about computer
+skill_end
+
+skill_start
+name:
+    Middle computer architecture
+id:
+    8
+description:
+    Medium knowledge about computers
+skill_end
+
+skill_start
+name:
+    Recursion
+id:
+    9
+description:
+    Familiar with recursion
+skill_end

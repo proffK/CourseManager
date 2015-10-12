@@ -75,7 +75,7 @@ class EditCourse(QtGui.QWidget):
 		
 		print GLOBAL_DATA_BASE.CourseCID
 		if CourseCId == -1:
-			self.courseForEdit = GLOBAL_DATA_BASE.get_course(GLOBAL_DATA_BASE.add_course("Course", "0", "0", "0", [], []))
+			self.courseForEdit = GLOBAL_DATA_BASE.get_course(GLOBAL_DATA_BASE.add_course("Course", 1, 1, "Hi", [], []))
 		else:
 			self.courseForEdit = GLOBAL_DATA_BASE.get_course(CourseCId)
 		#self.courseForEdit = GLOBAL_DATA_BASE.get_course(GLOBAL_DATA_BASE.add_course("Course", "0", "0", "0", [], []))
@@ -246,7 +246,7 @@ class ViewCourses(QtGui.QWidget):
 		courseId = int(self.coursesList.selectedItems()[0].data(32).toString())
 		print courseId
 		self.grid.addWidget(EditCourse(courseId), 0, 1)
-		GLOBAL_DATA_BASE.dump()
+		#GLOBAL_DATA_BASE.dump()
 
 
 app = QtGui.QApplication(sys.argv)
