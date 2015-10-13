@@ -44,7 +44,7 @@ class TCourse(object):
     def check(self):
         if len(self.Name) == 0 or self.Id < 0 or self.Hours <= 0 or \
            self.Weeks <= 0 or len(self.Description) == 0 or \
-           len(self.Skill_O) == 0 or len(self.Skill_I) == 0:
+           len(self.Skill_O) == 0:
             return -1
         return 0
 #*************************************************************************#
@@ -207,6 +207,8 @@ class TDataBase(object):
                 return int(Buffer.replace(' ',''))
             if option == "skill_i" or option == "skill_o":
                 BufferSkill = []
+                if len(Buffer)==1 and int(Buffer) == 0:
+                    return BufferSkill
                 for cur in Buffer.split(","):
                     BufferSkill.append(int(cur))
                 return BufferSkill
