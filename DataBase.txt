@@ -153,6 +153,15 @@ course_end
 
 skill_start
 name:
+    Basic C
+id:
+    1
+description:
+    Basic knowledge in C
+skill_end
+
+skill_start
+name:
     Medium C
 id:
     2

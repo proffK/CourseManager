@@ -384,6 +384,10 @@ class TDataBase(object):
         return -1
 #*************************************************************************#
     def remove_skill(self, Id):
+        if len(self.find_courses_with_inp_skill(Id)) == 0:
+            return -1
+        if len(self.find_courses_with_out_skill(Id)) == 0:
+            return -1
         for current in self.SkillList:
            if ( current.Id == Id ):
                self.SkillList.remove(current)
@@ -397,6 +401,7 @@ class TDataBase(object):
         return -1
 #*************************************************************************#
     def get_skill(self, Id):
+        #print Id
         for current in self.SkillList:
             if ( current.Id == Id ):
                 return current
