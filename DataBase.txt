@@ -10,7 +10,7 @@ weeks:
 description:
     It was funny
 skill_i:
-    1
+    0
 skill_o:
     1
 course_end
