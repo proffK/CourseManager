@@ -309,7 +309,7 @@ class TDataBase(object):
     def get_out_skills_with_id(self, Id):
         for current in self.CourseList:
             if current.Id == Id:
-                return current.Skill_I
+                return current.Skill_O
 #*************************************************************************#
     def exist_course(self, Id):
         for current in self.CourseList:
