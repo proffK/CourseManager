@@ -10,7 +10,7 @@ weeks:
 description:
     It was funny
 skill_i:
-    1
+    0
 skill_o:
     1
 course_end
@@ -150,6 +150,15 @@ skill_i:
 skill_o:
     5,9
 course_end
+
+skill_start
+name:
+    Basic C
+id:
+    1
+description:
+    Basic knowledge in C
+skill_end
 
 skill_start
 name:

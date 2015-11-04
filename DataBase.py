@@ -44,7 +44,7 @@ class TCourse(object):
     def check(self):
         if len(self.Name) == 0 or self.Id < 0 or self.Hours <= 0 or \
            self.Weeks <= 0 or len(self.Description) == 0 or \
-           len(self.Skill_O) == 0 or len(self.Skill_I) == 0:
+           len(self.Skill_O) == 0:
             return -1
         return 0
 #*************************************************************************#
@@ -207,6 +207,8 @@ class TDataBase(object):
                 return int(Buffer.replace(' ',''))
             if option == "skill_i" or option == "skill_o":
                 BufferSkill = []
+                if len(Buffer)==1 and int(Buffer) == 0:
+                    return BufferSkill
                 for cur in Buffer.split(","):
                     BufferSkill.append(int(cur))
                 return BufferSkill
@@ -382,6 +384,10 @@ class TDataBase(object):
         return -1
 #*************************************************************************#
     def remove_skill(self, Id):
+        if len(self.find_courses_with_inp_skill(Id)) == 0:
+            return -1
+        if len(self.find_courses_with_out_skill(Id)) == 0:
+            return -1
         for current in self.SkillList:
            if ( current.Id == Id ):
                self.SkillList.remove(current)
@@ -395,6 +401,7 @@ class TDataBase(object):
         return -1
 #*************************************************************************#
     def get_skill(self, Id):
+        #print Id
         for current in self.SkillList:
             if ( current.Id == Id ):
                 return current
