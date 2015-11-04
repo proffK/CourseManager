@@ -166,9 +166,11 @@ class TDataBase(xml.sax.ContentHandler):
             elif self.CurrentField == "description":
                 self.BufCourse.Description = content
             elif self.CurrentField == "skill_i":
-                self.BufCourse.Skill_I = map(int, content.split(","))
+                if (content.replace(","," ").replace(" ","").isdigit() == True):
+                    self.BufCourse.Skill_I = map(int, content.split(","))
             elif self.CurrentField == "skill_o":
-                self.BufCourse.Skill_O = map(int, content.split(","))
+                if (content.replace(","," ").replace(" ","").isdigit() == True):
+                    self.BufCourse.Skill_O = map(int, content.split(","))
         elif self.CurrentType == "skill":
             if self.CurrentField == "name":
                 self.BufSkill.Name = content
