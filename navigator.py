@@ -17,6 +17,7 @@
 from networkx import * 
 from DataBase import *
 from bitarray import *
+from copy import *
 import matplotlib.pyplot as plt
 
 
@@ -240,6 +241,22 @@ class CoursesGraph(object):
     def check_cycles(self):
 
         return find_cycle(self.Graph, orientation="original")
+
+################################################################################
+
+    def path2dot(self, Path, FilePath):
+
+        PathGraph = copy.deepcopy(self.Graph)
+        
+        for node in PathGraph.nodes():
+
+            if node not in Path:
+
+                PathGraph.remove_node(node)
+
+        nx.write_dot(PathGraph, FilePath)
+
+        return 0
 
 ################################################################################
 
