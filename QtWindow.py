@@ -18,12 +18,24 @@
 
 import sys
 from PyQt4 import QtGui, QtCore
-import DataBase
+import XMLDataBase as DataBase
 import navigator
+import graph_visual
+from PIL import Image
 
-DATA_BASE_NAME = open("DataBase.txt", "r+") 
-GLOBAL_DATA_BASE = DataBase.TDataBase(DATA_BASE_NAME)
-GLOBAL_DATA_BASE.pull()
+#DATA_BASE_NAME = open("DataBase.txt", "r+") 
+#GLOBAL_DATA_BASE = DataBase.TDataBase(DATA_BASE_NAME)
+#GLOBAL_DATA_BASE.pull()
+DOT_GRAPH_FILE_NAME = "temp.dot"
+PICTURE_FILE_NAME = "picture.png"
+
+
+DATA_BASE_NAME = DataBase.xml.sax.make_parser()
+DATA_BASE_NAME.setFeature(DataBase.xml.sax.handler.feature_namespaces,0)
+
+GLOBAL_DATA_BASE = DataBase.TDataBase()
+DATA_BASE_NAME.setContentHandler(GLOBAL_DATA_BASE)
+DATA_BASE_NAME.parse("DataBase.xml")
 
 class MainPage(QtGui.QWidget):
 	def __init__(self, parent = None):
@@ -328,6 +340,8 @@ class MakePath(QtGui.QWidget):
 		self.outputSkills.addItem(QtGui.QListWidgetItem(listItem))
 
 	def make_plan(self):
+		while self.pathList.takeItem(0):
+			pass
 		inputItem = []
 		item = self.inputSkills.takeItem(0)
 		while item:
@@ -341,6 +355,10 @@ class MakePath(QtGui.QWidget):
 		
 		graph = navigator.CoursesGraph(GLOBAL_DATA_BASE)
 		ResultList = graph.get_optimal_path(inputItem, outputItem)
+		graph.path2dot(ResultList, DOT_GRAPH_FILE_NAME)
+
+		graph_visual.visual_path(DOT_GRAPH_FILE_NAME, GLOBAL_DATA_BASE)
+		Image.open(PICTURE_FILE_NAME).show()
 
 		for resultId in ResultList:
 			self.pathList.addItem(GLOBAL_DATA_BASE.get_course(resultId).Name)
