@@ -17,6 +17,8 @@
 from networkx import * 
 from DataBase import *
 from bitarray import *
+import matplotlib.pyplot as plt
+
 
 MAX_INT = 65536
 
@@ -26,8 +28,8 @@ class CoursesGraph(object):
     Graph = 0
     FakeBeginNode = 0
     FakeEndNode = 0 
-    debug_i = 0
-    debug_m = 0
+    debug_i = 0    # number of check operation
+    debug_m = 0    # number of missed check operation
 
 ###############################################################################
  
@@ -62,6 +64,8 @@ class CoursesGraph(object):
         FakeEndEdges = self.gen_inp_node_edges(self.FakeEndNode, OutSkills)
         self.Graph.add_weighted_edges_from(FakeEndEdges)
 
+        #print InSkills, OutSkills
+
         answer = topological_sort(self.Graph)
         answer = answer[answer.index(0) + 1:answer.index(self.FakeEndNode)]    
 
@@ -75,14 +79,9 @@ class CoursesGraph(object):
         self.Graph.remove_node(self.FakeBeginNode)
         self.Graph.remove_node(self.FakeEndNode)
 
-        print '^ ', self.debug_i, self.debug_m, ' ^'
+        #print '^ ', self.debug_i, self.debug_m, ' ^'
 
         return index2path(opt_path[1], answer)
-
-###############################################################################
-    
-    def get_all_pathes(self, InSkills, OutSkills):
-        pass
 
 ###############################################################################
 
@@ -130,45 +129,6 @@ class CoursesGraph(object):
                 NewEdgesList.append((Node, Course, self.DB.get_time(Course)))
             
         return NewEdgesList
-
-###############################################################################
-    
-    def merge_pathes(self, PathesList):
-
-        OutPath = []
-        #print PathesList
-
-        for path in PathesList:
-
-            if path == []:
-                continue
-
-            for course in path:
-                if course in self.FakeEndNodes:
-                    path.pop(path.index(course))
-            
-            if 0 in path:
-                
-                path.pop(path.index(0))
-
-            i = 0
-
-            while i < len(path):
-                print OutPath
-
-                if path[i] not in OutPath:
-
-                    if i == 0:
-                        OutPath.insert(0, path[i])
-                    elif i == len(OutPath) - 1:
-                        OutPath.append(path[i])
-                    else: 
-                        OutPath.insert(OutPath.index(path[i-1]) + 1, path[i])
-
-                i += 1
-
-
-        return OutPath
 
 ###############################################################################
     
@@ -274,6 +234,31 @@ class CoursesGraph(object):
             result += self.DB.get_time(course)
     
         return result
+
+################################################################################
+
+    def check_cycles(self):
+
+        return find_cycle(self.Graph, orientation="original")
+
+################################################################################
+
+    def visualization(self):
+
+        pos=nx.shell_layout(self.Graph) # positions for all nodes
+        
+        # nodes
+        nx.draw_networkx_nodes(self.Graph,pos,node_size=700)
+        
+        # edges
+        nx.draw_networkx_edges(self.Graph,pos,
+                                    width=6,alpha=0.5,edge_color='b',style='dashed')
+        
+        # labels
+        nx.draw_networkx_labels(self.Graph,pos,font_size=20,font_family='sans-serif')
+        
+        plt.axis('off')
+        plt.show()
 
 ################################################################################
 
