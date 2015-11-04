@@ -2,16 +2,6 @@
 <database title="DataBase.xml">
 
 <course>
-   <name>Square equation</name>
-   <id>1</id>
-   <hours>1</hours>
-   <weeks>1</weeks>
-   <description>It was funny</description>
-   <skill_i></skill_i>
-   <skill_o>1</skill_o>
-</course>
-
-<course>
    <name>Ten tasks</name>
    <id>2</id>
    <hours>3</hours>
@@ -32,16 +22,6 @@
 </course>
 
 <course>
-   <name>Onegin sort</name>
-   <id>4</id>
-   <hours>3</hours>
-   <weeks>1</weeks>
-   <description>It was exhousting</description>
-   <skill_i>2</skill_i>
-   <skill_o>2</skill_o>
-</course>
-
-<course>
    <name>Hash table</name>
    <id>5</id>
    <hours>5</hours>
@@ -58,7 +38,7 @@
    <weeks>1</weeks>
    <description>It was boring</description>
    <skill_i>2</skill_i>
-   <skill_o>2,4,9</skill_o>
+   <skill_o>4,9</skill_o>
 </course>
 
 <course>
@@ -88,13 +68,13 @@
    <weeks>1</weeks>
    <description>It was funny</description>
    <skill_i>3,7</skill_i>
-   <skill_o>5,9</skill_o>
+   <skill_o>9</skill_o>
 </course>
 
 <skill>
    <name>Basic C</name>
    <id>1</id>
-   <description>Basic knowledge in C</description>
+   <description>Beginning knowledge in C</description>
 </skill>
 
 <skill>
@@ -143,12 +123,6 @@
    <name>Recursion</name>
    <id>9</id>
    <description>Familiar with recursion</description>
-</skill>
-
-<skill>
-   <name>ARM knowlege</name>
-   <id>10</id>
-   <description>Basic knowledge about ARM</description>
 </skill>
 
 </database>
