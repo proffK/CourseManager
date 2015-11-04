@@ -1,22 +1,5 @@
 course_start
 name:
-    Square equation
-id:
-    1
-hours:
-    1
-weeks:
-    1
-description:
-    It was funny
-skill_i:
-    1
-skill_o:
-    1
-course_end
-
-course_start
-name:
     Ten tasks
 id:
     2
@@ -134,13 +117,30 @@ skill_o:
     8
 course_end
 
+course_start
+name:
+    Translator
+id:
+    9
+hours:
+    3
+weeks:
+    1
+description:
+    It was funny
+skill_i:
+    3,7
+skill_o:
+    5,9
+course_end
+
 skill_start
 name:
     Basic C
 id:
     1
 description:
-    Beginning knowledge in C
+    Basic knowledge in C
 skill_end
 
 skill_start
@@ -214,3 +214,13 @@ id:
 description:
     Familiar with recursion
 skill_end
+
+skill_start
+name:
+    ARM knowledge
+id:
+    10
+description:
+    Basic knowledge about ARM
+skill_end
+
