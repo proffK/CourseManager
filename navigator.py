@@ -246,7 +246,7 @@ class CoursesGraph(object):
 
     def path2dot(self, Path, FilePath):
 
-        PathGraph = copy.deepcopy(self.Graph)
+        PathGraph = deepcopy(self.Graph)
         
         for node in PathGraph.nodes():
 
