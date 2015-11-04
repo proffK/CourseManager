@@ -15,6 +15,18 @@
    limitations under the License.
 '''
 
+'''EXAMPLE:
+    #parser init
+    parser = xml.sax.make_parser()
+    parser.setFeature(xml.sax.handler.feature_namespaces,0)
+
+    DataBase = TDataBase()
+    parser.setContextHandler(DataBase)
+    parser.parse("./Database.xml")
+
+    #Now you can work with DataBase
+'''
+
 import xml.sax
 import copy
 
