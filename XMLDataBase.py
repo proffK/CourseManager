@@ -21,8 +21,8 @@
     parser.setFeature(xml.sax.handler.feature_namespaces,0)
 
     DataBase = TDataBase()
-    parser.setContextHandler(DataBase)
-    parser.parse("./Database.xml")
+    parser.setContentHandler(DataBase)
+    parser.parse("./DataBase.xml")
 
     #Now you can work with DataBase
 '''
