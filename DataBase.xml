@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database title="DataBase.xml">
+
+<course>
+   <name>Ten tasks</name>
+   <id>2</id>
+   <hours>3</hours>
+   <weeks>1</weeks>
+   <description>It was boring</description>
+   <skill_i>1</skill_i>
+   <skill_o>2</skill_o>
+</course>
+
+<course>
+   <name>Stack processor</name>
+   <id>3</id>
+   <hours>5</hours>
+   <weeks>2</weeks>
+   <description>It was interesting</description>
+   <skill_i>1</skill_i>
+   <skill_o>2,5,7</skill_o>
+</course>
+
+<course>
+   <name>Hash table</name>
+   <id>5</id>
+   <hours>5</hours>
+   <weeks>1</weeks>
+   <description>It was interesting</description>
+   <skill_i>2</skill_i>
+   <skill_o>3,6</skill_o>
+</course>
+
+<course>
+   <name>Akinator</name>
+   <id>6</id>
+   <hours>4</hours>
+   <weeks>1</weeks>
+   <description>It was boring</description>
+   <skill_i>2</skill_i>
+   <skill_o>4,9</skill_o>
+</course>
+
+<course>
+   <name>Compiler</name>
+   <id>7</id>
+   <hours>10</hours>
+   <weeks>3</weeks>
+   <description>It was exciting</description>
+   <skill_i>2,4,5</skill_i>
+   <skill_o>3,9</skill_o>
+</course>
+
+<course>
+   <name>Binary translator</name>
+   <id>8</id>
+   <hours>12</hours>
+   <weeks>4</weeks>
+   <description>It was the best</description>
+   <skill_i>3,7</skill_i>
+   <skill_o>8</skill_o>
+</course>
+
+<course>
+   <name>Translator</name>
+   <id>9</id>
+   <hours>3</hours>
+   <weeks>1</weeks>
+   <description>It was funny</description>
+   <skill_i>3,7</skill_i>
+   <skill_o>9</skill_o>
+</course>
+
+<skill>
+   <name>Basic C</name>
+   <id>1</id>
+   <description>Beginning knowledge in C</description>
+</skill>
+
+<skill>
+   <name>Medium C</name>
+   <id>2</id>
+   <description>Familiar with standart library</description>
+</skill>
+
+<skill>
+   <name>Advanced C</name>
+   <id>3</id>
+   <description>Familiar with pointers and functions pointers</description>
+</skill>
+
+<skill>
+   <name>Trees algorithms</name>
+   <id>4</id>
+   <description>Beginning knowledge of trees</description>
+</skill>
+
+<skill>
+   <name>Stack algorithms</name>
+   <id>5</id>
+   <description>Beginning knowledge about stack</description>
+</skill>
+
+<skill>
+   <name>List algorithms</name>
+   <id>6</id>
+   <description>Beginning knowledge about lists</description>
+</skill>
+
+<skill>
+   <name>Basic computer architecture</name>
+   <id>7</id>
+   <description>Beginning knowledge about computer</description>
+</skill>
+
+<skill>
+   <name>Middle computer architecture</name>
+   <id>8</id>
+   <description>Medium knowledge about computers</description>
+</skill>
+
+<skill>
+   <name>Recursion</name>
+   <id>9</id>
+   <description>Familiar with recursion</description>
+</skill>
+
+</database>
